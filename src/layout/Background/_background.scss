@@ -1,0 +1,43 @@
+@use "../../sass/abstract" as *;
+
+.background {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--bg-color-dark);
+
+  // &[data-theme="light"] {
+  //   background-color: var(--bg-color);
+  // }
+
+  &__gradient {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-image: var(--bg-gradient-dark);
+    filter: saturate(140%) brightness(105%) contrast(102%) blur(20px);
+  }
+
+  &__border {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+
+    & > rect {
+      fill: none;
+      width: calc(100vw - 2rem * 2);
+      height: calc(100vh - 4.2rem * 2);
+      stroke: rgba(54, 154, 236, 0.281);
+      stroke-width: 0.2rem;
+      stroke-dasharray: 300% 60%;
+      stroke-dashoffset: 270%;
+    }
+  }
+
+  &__border-ctn {
+    position: fixed;
+    inset: 2rem;
+  }
+}
