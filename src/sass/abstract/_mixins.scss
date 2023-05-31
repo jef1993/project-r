@@ -2,6 +2,7 @@
   &::-webkit-scrollbar {
     width: 2rem;
     background-clip: padding-box;
+    scrollbar-gutter: stable both-edges;
   }
 
   &::-webkit-scrollbar-thumb {

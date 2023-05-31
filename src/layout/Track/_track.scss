@@ -29,39 +29,19 @@
     position: absolute;
     inset: 0;
     overflow-y: auto;
+    overflow-x: hidden;
     @include mainScrollbar();
+    scrollbar-gutter: stable both-edges;
   }
 
   &__rail {
     font-size: 8rem;
-    height: 100%;
+    height: 150%;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: rgba(255, 105, 94, 0.438);
-  }
-
-  &__nav {
-    position: fixed;
-    top: 2rem;
-    right: 4rem;
-    display: flex;
-    gap: 1rem;
-    z-index: 2;
-
-    & > a {
-      height: 5rem;
-      aspect-ratio: 1/1;
-      border-radius: 50%;
-      font-size: 2.4rem;
-      border: 0.2rem solid rgba(52, 128, 243, 0.274);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      text-decoration: none;
-    }
   }
 
   &__title {
@@ -70,8 +50,31 @@
     color: aliceblue;
     font-size: 4rem;
     text-align: center;
+    transition: top 0.4s ease;
+    z-index: 5;
 
-    & > span {
+    & > div {
+      height: 0;
+      transition: height 0.4s ease;
+
+      &:nth-child(3) {
+        transition-delay: 0.5s;
+      }
+    }
+  }
+
+  &__test {
+    height: 200%;
+    position: relative;
+    &__content {
+      position: sticky;
+      height: calc(100vh - 3.6rem * 2);
+      top: 0;
+      font-size: 8rem;
+      color: rgb(236, 44, 30);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }
