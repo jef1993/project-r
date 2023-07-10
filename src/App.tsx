@@ -1,81 +1,49 @@
-import React, { useEffect, useState, useRef } from "react";
-import {
-  motion,
-  useScroll,
-  useMotionValueEvent,
-  useSpring,
-  useTransform,
-} from "framer-motion";
-import {
-  createBrowserRouter,
-  Routes,
-  Route,
-  Link,
-  RouterProvider,
-  Outlet,
-  createRoutesFromElements,
-} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { ThemeProvider } from "styled-components";
+import { useSpring, AnimatePresence } from "framer-motion";
+import { Routes, Route, useLocation } from "react-router-dom";
 
-import Background from "./layout/Background/Background";
-import Track from "./layout/Track/Track";
+import GlobalStyles from "./styles/GlobalStyles";
+import theme, { darkTheme, lightTheme } from "./styles/themes";
+import Layout from "./layout";
+import { ReactComponent as ContourMap } from "./assets/contourMap2.svg";
+import contourMap from "./assets/contourMap.svg";
 
 function App() {
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
   const initialTheme = mediaQuery.matches ? "dark" : "light";
-  const [theme, setTheme] = useState<"light" | "dark">(initialTheme);
+  const [currentTheme, setcuurentTheme] = useState<"light" | "dark">(
+    initialTheme
+  );
   const [scrollYProgress, setScrollYProgress] = useState(0);
   const scrollYValue = useSpring(scrollYProgress);
-  const borderClipPath = (offSet = 0, gap = 0.2) => {
-    return `polygon(0 0,0 100%,100% 100%, 100% 0%, calc(50% + ${offSet}rem) 0%, calc(50% + ${offSet}rem) ${gap}rem, calc(50% - ${offSet}rem) ${gap}rem, calc(50% - ${offSet}rem) 0%)`;
-  };
-  const bordertest = useTransform(scrollYValue, [0, 1], [0, 1]);
+  const location = useLocation();
 
   useEffect(() => {
     const htmlElement = document.querySelector("html") as HTMLElement;
-    htmlElement.setAttribute("data-theme", theme);
-  }, [theme]);
+    htmlElement.setAttribute("data-theme", currentTheme);
+  }, [currentTheme]);
 
-  useEffect(() => {
-    console.log(scrollYProgress);
-  }, [scrollYProgress]);
-
-  const test = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
-
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route
-        path="/"
-        element={
-          <>
-            <Background theme={theme}></Background>
-            <main className="main">
-              <div className="main__wrapper">
-                <div className="main__nav">
-                  <a href="#section-1">1</a>
-                  <Link to="/">2</Link>
-                  <Link to="/test">3</Link>
-                </div>
-                <div className="main__content">
-                  <Outlet />
-                </div>
-              </div>
-            </main>
-          </>
-        }
-        errorElement={<div>error</div>}
-      >
-        <Route index element={<Track />} />
-        <Route path="/test" element={<Track isTitleTop />} />
-      </Route>
-    )
-  );
+  // useEffect(() => {
+  //   console.log(scrollYProgress);
+  // }, [scrollYProgress]);
 
   return (
-    <div className="App" data-theme={theme}>
-      <RouterProvider router={router} />
-    </div>
+    <ThemeProvider theme={currentTheme === "dark" ? darkTheme : lightTheme}>
+      <GlobalStyles />
+      <div className="App" data-theme={currentTheme}>
+        <ContourMap className="background" />
+        <Layout>
+          <main className="main">
+            <AnimatePresence mode="wait">
+              <Routes key={location.pathname} location={location}>
+                <Route path="/about" element={<div>home</div>} />
+              </Routes>
+            </AnimatePresence>
+          </main>
+        </Layout>
+      </div>
+    </ThemeProvider>
   );
 }
 
