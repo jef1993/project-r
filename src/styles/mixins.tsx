@@ -45,7 +45,7 @@ export const headingThin = css`
   font-size: 3rem;
   font-family: ${fonts.fontFace.sub};
   font-variation-settings: "wdth" 50, "wght" 100;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.25em;
   line-height: 100%;
   color: ${({ theme }) => theme.colors.secondary};
 `;

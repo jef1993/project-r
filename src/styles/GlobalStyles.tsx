@@ -9,6 +9,7 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     scroll-behavior: smooth;
     font-family: ${({ theme }) => theme.fontFace.main};
+    /* border: 1px solid red; */
   }
 
   html {
