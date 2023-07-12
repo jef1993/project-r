@@ -25,6 +25,7 @@ export const StyledHeader = styled(motion.header)`
   display: flex;
   gap: 4.2rem;
   ${mainColGrid};
+  /* grid-template-columns: repeat(7, minmax(9rem, 1fr)) repeat(5, minmax(0, 1fr)); */
 
   & .header {
     &__left {
@@ -57,6 +58,16 @@ export const StyledHeader = styled(motion.header)`
         align-self: flex-end;
         top: 0;
         left: 0;
+        z-index: 2;
+      }
+
+      &__divider {
+        position: absolute;
+        height: 0.4rem;
+        top: 52px;
+        width: 100%;
+        background-color: ${({ theme }) => theme.colors.primary};
+        z-index: -1;
       }
     }
 
@@ -95,18 +106,16 @@ export const StyledHeader = styled(motion.header)`
         border-bottom: 0.2rem solid ${({ theme }) => theme.colors.primary};
         overflow: hidden;
         position: relative;
+        ${headingS};
 
-        &:not(:last-of-type) {
-          /* margin-bottom: 2.4rem; */
-        }
+        /* &:not(:first-child) {
+          margin-block: 1.2rem;
+        } */
       }
 
       &__link {
         position: absolute;
-        ${headingS};
-        font-size: 6.4rem;
         text-transform: uppercase;
-        top: 2rem;
       }
     }
   }

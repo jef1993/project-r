@@ -31,12 +31,8 @@ const Layout: React.FC<LayoutProps> = ({ children, isPageIndex = true }) => {
   const isInIndex = pathname === "/";
   const { height } = useWindowSize();
   const navRef = useRef(null);
-  const [logoRef, { width: logoWidth, height: logoHeight }] =
-    useMeasure<HTMLDivElement>();
-
-  const spring = { stiffness: 80, damping: 6, mass: 0.7 };
-
-  const weakSpring = { stiffness: 50, damping: 6, mass: 3 };
+  const spring = { stiffness: 40, damping: 5, mass: 0.4, delay: 0.3 };
+  const weakSpring = { stiffness: 50, damping: 3, mass: 3 };
 
   return (
     <StyledLayout className="layout">
@@ -47,11 +43,14 @@ const Layout: React.FC<LayoutProps> = ({ children, isPageIndex = true }) => {
               className="header__logo__link"
               initial={{
                 fontSize: isInIndex ? "10.2rem" : "4.8rem",
+                x: isInIndex ? "-30%" : "-30%",
+                opacity: isInIndex ? 0 : 0,
               }}
               animate={{
                 fontSize: isInIndex ? "10.2rem" : "4.8rem",
+                x: isInIndex ? "0%" : "0%",
+                opacity: isInIndex ? 1 : 1,
               }}
-              ref={logoRef}
               transition={spring}
             >
               <Link to="/">Jeffrey Leung</Link>
@@ -61,45 +60,69 @@ const Layout: React.FC<LayoutProps> = ({ children, isPageIndex = true }) => {
               initial={{
                 fontSize: isInIndex ? "3rem" : "1.6rem",
                 y: isInIndex ? "9rem" : "1.4rem",
+                x: isInIndex ? "48rem" : "40rem",
+                // color: isInIndex ? "hsl(230, 5%, 94%)" : "hsl(0, 0%, 20%)",
+                opacity: isInIndex ? 0 : 0,
               }}
               animate={{
-                x: isInIndex
-                  ? ["38rem", "40rem", "40rem"]
-                  : ["40rem", "40rem", "38rem"],
+                x: isInIndex ? "40rem" : "37rem",
                 y: isInIndex ? "9rem" : "1.4rem",
-                color: isInIndex ? "hsl(0, 100%, 100%)" : "hsl(0, 0%, 20%)",
+                color: isInIndex ? "hsl(230, 5%, 94%)" : "hsl(0, 0%, 20%)",
                 fontSize: isInIndex ? "3rem" : "1.6rem",
+                opacity: isInIndex ? 1 : 1,
               }}
               transition={spring}
             >
               frontend developer
             </motion.span>
+            <motion.div
+              className="header__logo__divider"
+              initial={{
+                width: isInIndex ? "0%" : "100%",
+              }}
+              animate={{
+                width: isInIndex ? "0%" : "100%",
+              }}
+              transition={{ delay: isInIndex ? 0 : 0.4, ...weakSpring }}
+            ></motion.div>
           </div>
           <motion.div
             className="header__ctn"
-            initial={{ opacity: 0 }}
+            initial={{
+              // opacity: isInIndex ? 0 : 1,
+              gridTemplateColumns: isInIndex ? "0px 1fr" : `${350}px 1fr`,
+              gridTemplateRows: isInIndex ? `${142}px 1fr` : "0px 1fr",
+            }}
             animate={{
-              gridTemplateColumns: isInIndex
-                ? "0px 1fr"
-                : `${logoWidth + 24}px 1fr`,
-              gridTemplateRows: isInIndex
-                ? `${logoHeight + 40}px 1fr`
-                : "0px 1fr",
-              opacity: [0, 1],
+              gridTemplateColumns: isInIndex ? "0px 1fr" : `${350}px 1fr`,
+              gridTemplateRows: isInIndex ? `${142}px 1fr` : "0px 1fr",
+              // opacity: 1,
             }}
             transition={spring}
           >
             <motion.div
               className="header__avatar"
               style={{ backgroundImage: `url(${avatar})` }}
+              initial={{
+                y: isInIndex ? "25%" : "0%",
+                height: isInIndex ? "calc(100vh - 200px)" : "32px",
+                opacity: isInIndex ? 0 : 0,
+              }}
               animate={{
                 height: isInIndex ? "calc(100vh - 200px)" : "32px",
+                y: isInIndex ? "0%" : "0%",
+                opacity: isInIndex ? 1 : 1,
               }}
-              transition={spring}
+              transition={weakSpring}
             ></motion.div>
           </motion.div>
         </div>
-        <nav className="header__nav">
+        <motion.nav
+          className="header__nav"
+          // animate={{
+          //   gridColumn: isInIndex ? "8/-1" : "10/-1",
+          // }}
+        >
           <ul className="header__nav__list">
             <AnimatePresence mode="wait">
               {navOptions.map((option, i) => (
@@ -107,18 +130,21 @@ const Layout: React.FC<LayoutProps> = ({ children, isPageIndex = true }) => {
                   className="header__nav__item"
                   key={option.path}
                   animate={{
-                    x:
-                      option.path === pathname
-                        ? ["0%", "0%", "100%"]
-                        : ["100%", "0%", "0%"],
-                    height:
-                      pathname === "/"
-                        ? 90
-                        : option.path === pathname
-                        ? [90, 0, 0]
-                        : [0, 0, 90],
+                    x: option.path === pathname ? "100%" : "0%",
+                    height: isInIndex ? 64 : option.path === pathname ? 0 : 22,
+                    fontSize: isInIndex ? "6.4rem" : "2rem",
+                    marginBottom:
+                      option.path === pathname ? 0 : isInIndex ? 16 : 8,
                   }}
-                  transition={spring}
+                  transition={{
+                    borderBottom: {
+                      duration: 0,
+                    },
+                  }}
+                  whileHover={{
+                    x: 6,
+                    fontVariationSettings: '"ital" 0, "wdth" 100, "wght" 800',
+                  }}
                 >
                   <NavLink className="header__nav__link" to={option.path}>
                     {option.name}
@@ -127,7 +153,7 @@ const Layout: React.FC<LayoutProps> = ({ children, isPageIndex = true }) => {
               ))}
             </AnimatePresence>
           </ul>
-        </nav>
+        </motion.nav>
       </StyledHeader>
       {children}
     </StyledLayout>
