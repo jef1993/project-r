@@ -1,14 +1,15 @@
 import { createGlobalStyle } from "styled-components";
 import { scrollBar } from "./mixins";
-import theme from "./themes";
+import { getColors } from "./themes";
+import variables, { border } from "./variables";
 
 const GlobalStyles = createGlobalStyle`
 
   :where(*, *::before, *::after) {
     margin: 0;
     padding: 0;
-    scroll-behavior: smooth;
-    font-family: ${({ theme }) => theme.fontFace.main};
+    font-family: ${variables.fontFace.main};
+    box-sizing: border-box;
     /* border: 1px solid red; */
   }
 
@@ -20,10 +21,6 @@ const GlobalStyles = createGlobalStyle`
     font-family: ${({ theme }) => theme.fontFace.main};
     font-variation-settings: "ital" 0, "wdth" 100, "wght" 400;
   }
-
-  /* :where(#root) {
-     height: 100%;
-  } */
   
   body {
     margin: 0;
@@ -31,67 +28,121 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
     font-size: 1.6rem;
     font-family: sans-serif;
-    background-image: ${({ theme }) => theme.gradients.background};
-    background-repeat: no-repeat;
     height: inherit;
     height: 100vh;
     max-height: 100svh;
     overflow: hidden;
+    background-color: ${getColors("background")};
   }
 
   #root {
     height: inherit;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
+    align-items: center; 
+     overflow: hidden;
   }
 
   .App {
-    flex-grow: 1;
-    padding: 2.4rem;
-    padding-right: 0;
-    scrollbar-gutter: stable; 
-    overflow-y: auto;
-    ${scrollBar};
-    flex-grow: 1;
-    position: relative;
-
-    /* &::after {
-    content: '';
-    position: fixed;
-    width: 0.4rem;
-    top: 0;
-    right: 2.4rem;
-    height: 100vh;
-    height: 100svh;
-    background-color: ${({ theme }) => theme.colors.primary};
-  } */
+    height: inherit;
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
   }
 
-  .background {
-    width: 100vmax;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    
+  .page-container {
+    display: grid;
+    gap: 8px;
+    height: inherit;
+    overflow: hidden;
+    margin: auto;
+    flex: 1 1 0;
 
-    
-    & > g {
-      /* fill: ${({ theme }) => theme.colors.contourFill}; */
-      fill: hsla(0, 0%, 100%, 0.00);
-      animation: mapEffect 1.2s ease-in-out 0s forwards;
-      filter: drop-shadow(2px 2px 2px transparent);
+  }
 
-      @keyframes mapEffect {
-        to {
-          filter: drop-shadow(2px 2px 2px '#fff');
-          fill: hsla(0, 0%, 100%, 0.04);
-        }
-        
-      }
+  .page-content {
+    width: 100%;
+    margin-bottom: 0.6rem;
+
+  }
+
+
+  .main {
+    grid-area: 5/1/span 7/-1;
+    overflow-y: hidden;
+    position: relative;
+    margin-inline: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+
+    /* width: calc(100vw - 3.2rem);
+      max-width: 1408px; */
+      
+      /* background-color: ${getColors("background")}; */
+      /* border-radius: ${border.radiusM};
+      border: ${border.widthM} solid ${getColors("borderMain")};
+      border: none; */
+
+
+
+    /* &::before {
+      position: absolute;
+      content: '';
+      inset-block: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 1408px;
+
+
+      background-color: ${getColors("background")};
+      border-radius: ${border.radiusM};
+      border: ${border.widthM} solid ${getColors("borderMain")};
+    } */
+
+
+    /* background-color: ${getColors("background")};
+    border-radius: ${border.radiusM};
+     border: ${border.widthM} solid ${getColors("borderMain")}; */
+  }
+
+  .main-wrapper {
+  }
+
+  
+
+  .simple-bar {
+    grid-area: 5/1/span 7/-1;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100vw;
+    height: 100%;
+    flex: 1 1 0;
+
+    & .simplebar-track.simplebar-vertical {
+       /* position: fixed !important; */
+       width: 16px;
+       z-index: 5;
+       /* padding-block: 6px; */
+
     }
 
+    & .simplebar-scrollbar {
+      left: 2px;
+      right: 2px;
+
+      &::before {
+        top: 6px;
+        bottom: 6px;
+      }
+
+    }
+
+  
+
   }
+
 
 
   a {

@@ -1,5 +1,5 @@
 import { css } from "styled-components";
-import { fonts } from "./variables";
+import variables from "./variables";
 
 export const scrollBar = css`
   &::-webkit-scrollbar {
@@ -29,23 +29,26 @@ export const mainColGrid = css`
   column-gap: 4.2rem;
 `;
 
-export const headingM = css`
-  font-variation-settings: "ital" 0, "wdth" 100, "wght" 800;
-  letter-spacing: -0.05em;
-  line-height: 100%;
+export const headingFont = css`
+  font-family: ${variables.fontFace.main};
+  color: ${({ theme }) => theme.colors.primary};
+  font-variation-settings: "ital" 0, "wdth" 150, "wght" 950;
+  letter-spacing: -0.03em;
+  line-height: 86%;
 `;
 
 export const headingS = css`
   font-variation-settings: "ital" 0, "wdth" 100, "wght" 500;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em;
   line-height: 100%;
 `;
 
-export const headingThin = css`
+export const headingThinFont = css`
   font-size: 3rem;
-  font-family: ${fonts.fontFace.sub};
+  font-family: ${variables.fontFace.sub};
   font-variation-settings: "wdth" 50, "wght" 100;
-  letter-spacing: 0.25em;
+  font-weight: 100;
+  letter-spacing: 0.13em;
   line-height: 100%;
   color: ${({ theme }) => theme.colors.secondary};
 `;
