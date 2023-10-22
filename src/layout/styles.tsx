@@ -11,7 +11,7 @@ export const StyledHeader = styled(motion.header)`
   grid-row: 1 / span 4;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  /* grid-template-rows: 1fr auto; */
+  grid-template-rows: 1fr;
   gap: 0.8rem;
   margin-inline: 1.6rem;
   width: 100%;
@@ -23,7 +23,12 @@ export const StyledHeader = styled(motion.header)`
 
   & .header {
     &__pattern {
-      /* grid-row: 1/-1; */
+      grid-area: 1/7/-1/-1;
+
+      & > .links {
+        display: flex;
+        gap: 12px;
+      }
     }
   }
 `;
@@ -31,7 +36,7 @@ export const StyledHeader = styled(motion.header)`
 export const StyledHeaderLogo = styled(motion.div)`
   text-transform: uppercase;
   align-self: flex-end;
-  grid-column: 1 / span 6;
+  grid-area: 1/1/-1/-1;
 
   /* grid-column: 1 / span 6;
   grid-row: 2/-1;
@@ -54,13 +59,33 @@ export const StyledHeaderLogo = styled(motion.div)`
 `;
 
 export const StyledFooter = styled.footer`
+  width: 100%;
   margin-inline: 1.6rem;
   gap: 8px;
-  max-width: 1408px;
   margin-inline: auto;
   z-index: 10;
-  background-color: ${getColors("background")};
-  grid-column: 1/-1;
-  grid-row: 12 / -1;
-  width: calc(100% - 3.2rem);
+  /* background-color: ${getColors("background")}; */
+  height: 60px;
+  font-size: 32px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`;
+
+export const StyledLoading = styled(motion.div)`
+  grid-area: 5/1/-1/-1;
+  background-color: red;
+`;
+
+export const StyledBgGrid = styled(motion.div)`
+  height: 100%;
+
+  width: 1000px;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  position: fixed;
+  background-size: 100px;
+  opacity: 0.4;
+  border-inline: 1px solid ${getColors("borderMain")};
 `;

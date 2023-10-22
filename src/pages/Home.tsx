@@ -1,41 +1,85 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { StyledHome } from "./styles";
 import { motion } from "framer-motion";
+const mainPath = window.location.pathname.split("/")[1];
+const gridRows = {
+  rowIn: "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
+  rowOut: "0fr 1fr 1fr 0fr 0fr 0fr 0fr",
+  row2Out: "0fr 0fr 0fr 1fr 1fr 0fr 0fr",
+  row3Out: "0fr 0fr 0fr 0fr 0fr 1fr 1fr",
+};
+const gridCols = {
+  colIn: "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr",
+  colOut: "0fr 0fr 0fr 0fr 0fr 0fr 0fr 1fr 1fr 1fr 1fr 1fr",
+};
+const { rowIn, rowOut, row2Out, row3Out } = gridRows;
+const { colIn, colOut } = gridCols;
+const rowSeq = (path: string) => {
+  const pathname = path.replace("/", "");
+  if (pathname === "projects") return [rowIn, row2Out, row2Out, row2Out];
+  if (pathname === "info") return [rowIn, row3Out, row3Out, row3Out];
+  return [rowIn, rowOut, rowOut, rowOut];
+};
 
-const Home = () => {
-  const { pathname } = useLocation();
+const linkAnimate = {
+  initial: {
+    width: 0,
+    opacity: 0,
+  },
+  animate: {
+    width: ["0%", "0%", "0%", "100%"],
+    opacity: [0, 0, 0, 1],
+  },
+  exit: {
+    width: ["100%", "0%", "0%", "0%"],
+    opacity: [1, 0, 0, 0],
+  },
+  transition: { duration: 0.9 },
+};
+
+interface HomeProps {
+  isAnimated: boolean;
+  pathname?: string;
+}
+
+const Home: React.FC<HomeProps> = ({ isAnimated, pathname }) => {
   const mainPath = window.location.pathname.split("/")[1];
+  const navigate = useNavigate();
+  console.log(mainPath);
 
-  const exitGridRows = () => {
-    if (mainPath === "experience") return "0fr 1fr 1fr 0fr 0fr 0fr 0fr";
+  const paths = [
+    {
+      name: "experience",
+    },
+    {
+      name: "projects",
+    },
+    {
+      name: "info",
+    },
+  ];
+
+  const clickHandler = (path: string) => {
+    setTimeout(() => navigate(path), 75);
   };
+
   return (
     <StyledHome
       className="home"
       initial={{
-        gridTemplateColumns: "0fr 0fr 0fr 0fr 0fr 0fr 0fr 1fr 1fr 1fr 1fr 1fr",
-        gridTemplateRows: "0fr 1fr 1fr 0fr 0fr 0fr 0fr",
+        gridTemplateColumns: colOut,
         gap: "0rem",
+        opacity: isAnimated ? 1 : 0,
       }}
       animate={{
-        gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr",
-        gridTemplateRows: [
-          "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
-          "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
-          "0fr 1fr 1fr 0fr 0fr 0fr 0fr",
-          "0fr 1fr 1fr 0fr 0fr 0fr 0fr",
-        ].reverse(),
+        gridTemplateColumns: colIn,
+        gridTemplateRows: rowSeq("info").reverse(),
         gap: ["0.8rem", "0rem", "0rem"].reverse(),
+        opacity: 1,
       }}
       exit={{
-        gridTemplateColumns: "0fr 0fr 0fr 0fr 0fr 0fr 0fr 1fr 1fr 1fr 1fr 1fr",
-
-        gridTemplateRows: [
-          "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
-          "0fr 1fr 1fr 0fr 0fr 0fr 0fr",
-          "0fr 1fr 1fr 0fr 0fr 0fr 0fr",
-          "0fr 1fr 1fr 0fr 0fr 0fr 0fr",
-        ],
+        gridTemplateColumns: colOut,
+        gridTemplateRows: rowSeq(mainPath),
         gap: ["0.8rem", "0rem", "0rem"],
       }}
       transition={{ delay: 0.2 }}
@@ -60,7 +104,7 @@ const Home = () => {
         <h2>Location</h2>
         <p>Manchester</p>
       </div>
-      <motion.div className="home__link">
+      {/* <motion.div className="home__link">
         <Link to="experience">
           <motion.span
             initial={{ opacity: 0 }}
@@ -70,57 +114,90 @@ const Home = () => {
             experience
           </motion.span>
         </Link>
-      </motion.div>
-      <motion.div
-        className="home__link"
-        initial={{
-          width: 0,
-          opacity: 0,
-        }}
-        animate={{
-          width: ["0%", "0%", "0%", "100%"],
-          opacity: [0, 0, 0, 1],
-        }}
-        exit={{
-          width: ["100%", "0%", "0%", "0%"],
-          opacity: [1, 0, 0, 0],
-        }}
-        transition={{ duration: 0.9 }}
-      >
-        <Link to="experience">experience</Link>
-      </motion.div>
-      <motion.div
-        className="home__link"
-        initial={{
-          width: 0,
-          opacity: 0,
-        }}
-        animate={{
-          width: ["0%", "0%", "0%", "100%"],
-          opacity: [0, 0, 0, 1],
-        }}
-        exit={{
-          width: ["100%", "0%", "0%", "0%"],
-          opacity: [1, 0, 0, 0],
-        }}
-        transition={{ duration: 0.9 }}
-      >
-        <Link to="experience">experience</Link>
-      </motion.div>
+      </motion.div> */}
+      {paths.map((path) => (
+        <motion.div
+          key={path.name}
+          className="home__link"
+          initial={mainPath === path.name ? undefined : linkAnimate.initial}
+          animate={{
+            width:
+              mainPath === path.name ? undefined : ["0%", "0%", "0%", "100%"],
+            opacity: mainPath === path.name ? undefined : [0, 0, 0, 1],
+          }}
+          exit={{
+            width:
+              mainPath === path.name ? undefined : ["100%", "0%", "0%", "0%"],
+            opacity: mainPath === path.name ? undefined : [1, 0, 0, 0],
+          }}
+          // transition={{ duration: mainPath === path.name ? undefined : 0.9 }}
 
-      {/* <nav className="home__nav">
-        <ul className="home__nav__list">
-          <li className="home__nav__item">
-            <Link className="home__link" to="experience">experience</Link>
-          </li>
-          <li className="home__nav__item">
-            <Link to="projects">experience</Link>
-          </li>
-          <li className="home__nav__item">
-            <Link to="info">Info</Link>
-          </li>
-        </ul>
-      </nav> */}
+          // initial={{
+          //   width: mainPath === path.name ? 0 : 0,
+          //   opacity: 0,
+          // }}
+          // animate={{
+          //   width:
+          //     mainPath === path.name ? undefined : ["0%", "0%", "0%", "100%"],
+          //   opacity: [0, 0, 0, 1],
+          // }}
+          // exit={{
+          //   width:
+          //     mainPath === path.name ? undefined : ["100%", "0%", "0%", "0%"],
+          //   opacity: [1, 0, 0, 0],
+          // }}
+          // initial={{ opacity: 0 }}
+          // animate={{ opacity: [0, 0, 0, 1] }}
+          // exit={{ opacity: [1, 0, 0, 0] }}
+          // transition={{ duration: mainPath === path.name ? undefined : 0.9 }}
+        >
+          <button onClick={clickHandler.bind(null, path.name)}>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 0, 0, 1] }}
+              exit={{ opacity: [1, 0, 0, 0] }}
+            >
+              {path.name}
+            </motion.span>
+          </button>
+        </motion.div>
+      ))}
+      {/* <motion.div
+        className="home__link"
+        initial={{
+          width: 0,
+          opacity: 0,
+        }}
+        animate={{
+          width: ["0%", "0%", "0%", "100%"],
+          opacity: [0, 0, 0, 1],
+        }}
+        exit={{
+          width: ["100%", "0%", "0%", "0%"],
+          opacity: [1, 0, 0, 0],
+        }}
+        transition={{ duration: 0.9 }}
+      >
+        <Link to="project">project</Link>
+      </motion.div>
+      <motion.div
+        className="home__link"
+        initial={{
+          width: 0,
+          opacity: 0,
+        }}
+        animate={{
+          width: ["0%", "0%", "0%", "100%"],
+          opacity: [0, 0, 0, 1],
+        }}
+        exit={{
+          width: ["100%", "0%", "0%", "0%"],
+          opacity: [1, 0, 0, 0],
+        }}
+        transition={{ duration: 0.9 }}
+      >
+        <Link to="contact">contact</Link>
+      </motion.div> */}
     </StyledHome>
   );
 };

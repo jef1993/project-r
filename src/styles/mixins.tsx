@@ -33,8 +33,9 @@ export const headingFont = css`
   font-family: ${variables.fontFace.main};
   color: ${({ theme }) => theme.colors.primary};
   font-variation-settings: "ital" 0, "wdth" 150, "wght" 950;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
   line-height: 86%;
+  text-transform: uppercase;
 `;
 
 export const headingS = css`

@@ -55,27 +55,31 @@ const GlobalStyles = createGlobalStyle`
     display: grid;
     gap: 8px;
     height: inherit;
-    overflow: hidden;
+    /* overflow: hidden; */
     margin: auto;
     flex: 1 1 0;
+    max-width: calc(100vw - 3.2rem);
 
   }
 
   .page-content {
     width: 100%;
     margin-bottom: 0.6rem;
+    background-color: ${getColors("background")};
+    max-width: 1200px;
+    flex: 1 1 0;
 
   }
 
 
-  .main {
+  main {
     grid-area: 5/1/span 7/-1;
-    overflow-y: hidden;
+    /* overflow-y: hidden;
     position: relative;
     margin-inline: auto;
     width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; */
 
 
     /* width: calc(100vw - 3.2rem);
@@ -108,23 +112,16 @@ const GlobalStyles = createGlobalStyle`
      border: ${border.widthM} solid ${getColors("borderMain")}; */
   }
 
-  .main-wrapper {
-  }
-
   
 
   .simple-bar {
-    grid-area: 5/1/span 7/-1;
-    -webkit-overflow-scrolling: touch;
-    max-width: 100vw;
     height: 100%;
+    width: 100%;
     flex: 1 1 0;
 
     & .simplebar-track.simplebar-vertical {
-       /* position: fixed !important; */
        width: 16px;
        z-index: 5;
-       /* padding-block: 6px; */
 
     }
 
@@ -139,8 +136,16 @@ const GlobalStyles = createGlobalStyle`
 
     }
 
-  
+    & .simplebar-content {
+      /* background-color: ${getColors("background")}; */
+      /* max-width: 1200px; */
+      height: inherit;
+      display: flex;
+      flex-direction: column;
 
+    }
+
+    
   }
 
 

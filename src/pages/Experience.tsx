@@ -1,24 +1,42 @@
-import SimpleBar from "simplebar-react";
 import { motion } from "framer-motion";
 import { StyledExperience } from "./styles";
-import { Link } from "react-router-dom";
-import variables from "../styles/variables";
 
 const Experience = () => {
   return (
-    <StyledExperience
-      className="page-content"
-      initial={{ overflow: "hidden" }}
-      animate={{ overflow: "auto" }}
-      exit={{ overflow: "hidden" }}
-    >
+    <StyledExperience className="page-content">
       <motion.div
         className="test"
-        initial={{ translateX: "100%" }}
-        animate={{ translateX: "0%" }}
-        exit={{ translateX: "100%" }}
-        transition={{ type: "tween", duration: 0.2 }}
-      ></motion.div>
+        initial={{ opacity: 0, y: 25 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -25 }}
+        transition={{ delay: 0.3, stiffness: 75 }}
+      >
+        <h1>Test Content</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur. Porttitor nullam lectus diam
+          nulla ultrices tellus hendrerit. Adipiscing hendrerit risus tristique
+          arcu in volutpat nibh integer. Adipiscing vulputate nunc et accumsan
+          condimentum etiam justo diam. Sodales convallis pharetra sed ultricies
+          neque pretium vitae egestas varius. Eget id viverra nec sed quam
+          euismod elit. Auctor vel ac
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur. Porttitor nullam lectus diam
+          nulla ultrices tellus hendrerit. Adipiscing hendrerit risus tristique
+          arcu in volutpat nibh integer. Adipiscing vulputate nunc et accumsan
+          condimentum etiam justo diam. Sodales convallis pharetra sed ultricies
+          neque pretium vitae egestas varius. Eget id viverra nec sed quam
+          euismod elit. Auctor vel ac
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur. Porttitor nullam lectus diam
+          nulla ultrices tellus hendrerit. Adipiscing hendrerit risus tristique
+          arcu in volutpat nibh integer. Adipiscing vulputate nunc et accumsan
+          condimentum etiam justo diam. Sodales convallis pharetra sed ultricies
+          neque pretium vitae egestas varius. Eget id viverra nec sed quam
+          euismod elit. Auctor vel ac
+        </p>
+      </motion.div>
     </StyledExperience>
   );
 };
