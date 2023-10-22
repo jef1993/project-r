@@ -43,7 +43,7 @@ function App() {
   const [isAnimated, setIsAnimated] = useState(!isInIndex);
   const [isTrasitioned, setIsTrasitioned] = useState(false);
   const y = useMotionValue(0);
-  const ySpring = useSpring(y);
+  const ySpring = useSpring(y, { mass: 0.1, stiffness: 33 });
 
   useEffect(() => {
     const interval = setInterval(() => y.set(y.get() + 1), 1000 / 60);
@@ -83,7 +83,6 @@ function App() {
       <GlobalStyles theme={theme} />
       <motion.div className="App" data-theme={currentTheme}>
         <BgGrid y={ySpring} />
-
         <AnimatePresence mode="wait">
           <motion.div
             className="page-container"
@@ -99,7 +98,7 @@ function App() {
                 : pageGrid.loading,
 
               width: isInIndex ? "1408px" : "100%",
-              height: isInIndex ? "50vh" : "100vh",
+              height: isInIndex ? "1400px" : "100vh",
             }}
             transition={{ delay: isTrasitioned ? 0.45 : 0 }}
           >

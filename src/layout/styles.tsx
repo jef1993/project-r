@@ -80,12 +80,24 @@ export const StyledLoading = styled(motion.div)`
 export const StyledBgGrid = styled(motion.div)`
   height: 100%;
 
-  width: 1000px;
+  width: 1200px;
   top: 0;
   left: 0;
   z-index: -1;
   position: fixed;
   background-size: 100px;
   opacity: 0.4;
+  overflow: hidden;
   border-inline: 1px solid ${getColors("borderMain")};
+
+  & > svg {
+    height: 100vmax;
+    width: 100vmax;
+    aspect-ratio: 1/-1;
+    overflow: hidden;
+    transform: scale(1.02);
+
+    & .grid-ctn {
+    }
+  }
 `;

@@ -87,7 +87,7 @@ const TestMain: React.FC<TestMainProps> = ({ y }) => {
               <SimpleBar
                 className="simple-bar"
                 onScrollCapture={() => {
-                  y.set(y.get() + 1);
+                  y.set(y.get() + 3);
                 }}
               >
                 <Outlet />
