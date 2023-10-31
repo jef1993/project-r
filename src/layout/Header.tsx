@@ -1,9 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
 import { StyledHeader, StyledHeaderLogo } from "./styles";
+import { MotionValue, motion, useTransform } from "framer-motion";
+import { fill } from "lodash";
 
 interface HeaderProps {
   isAnimated: boolean;
+  y: MotionValue<number>;
 }
 
 const headerAnimate = {
@@ -23,24 +25,35 @@ const headerAnimate = {
   },
 };
 
-const Header: React.FC<HeaderProps> = ({ isAnimated }) => {
+const Header: React.FC<HeaderProps> = ({ isAnimated, y }) => {
   const { pathname } = useLocation();
   const isInIndex = pathname === "/";
   const animateKey = isInIndex ? "index" : "pages";
+  const offset = useTransform(y, (y) => -y * 0.08);
   const { paddingInline, delay, fontSize, logoMarginLeft, logoSize } =
     headerAnimate[animateKey];
+
+  const waveLinePoints = (offset = 0, strokeWidth = 16) => {
+    return `0,${100 + offset} 0,${
+      100 - strokeWidth + offset
+    } 50,${offset} 100,${100 - strokeWidth + offset} 100,${100 + offset} 50,${
+      strokeWidth + offset
+    }`;
+  };
+
+  const waveLines = () => {};
+
   return (
     <StyledHeader
       className="header"
-      initial={{
-        paddingInline: paddingInline,
-      }}
-      animate={{
-        paddingInline,
-      }}
       transition={{ delay: isAnimated ? 0.45 : 0 }}
     >
-      <StyledHeaderLogo className="header-logo">
+      <StyledHeaderLogo
+        className="header-logo"
+        initial={{ paddingInline }}
+        animate={{ paddingInline }}
+        transition={{ delay: isAnimated ? 0.45 : 0 }}
+      >
         <motion.p
           className="header-logo__title"
           initial={{
@@ -73,6 +86,49 @@ const Header: React.FC<HeaderProps> = ({ isAnimated }) => {
         </motion.p>
       </StyledHeaderLogo>
       <div className="header__pattern">
+        <svg
+          className="header__svg"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+          opacity={0.3}
+        >
+          <defs>
+            <motion.pattern
+              id="arrows"
+              viewBox="0 0 100 100"
+              width="0.1"
+              height="0.1"
+            >
+              <polygon fill="#000000" points={waveLinePoints(75)} />
+              <polygon fill="#000000" points={waveLinePoints(50)} />
+              <polygon fill="#000000" points={waveLinePoints(25)} />
+              <polygon fill="#000000" points={waveLinePoints()} />
+              <polygon fill="#000000" points={waveLinePoints(-25)} />
+              <polygon fill="#000000" points={waveLinePoints(-50)} />
+              <polygon fill="#000000" points={waveLinePoints(-75)} />
+            </motion.pattern>
+            <motion.pattern
+              viewBox="0 0 20 20"
+              width="0.4"
+              height="0.4"
+              id="arrow-box"
+              animate={{ stroke: ["#72eb02", "#aa1a1a"] }}
+              style={{ y: offset }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+              }}
+            >
+              <rect
+                width="100%"
+                height="100%"
+                fill="url(#arrows)"
+                strokeWidth={0}
+              ></rect>
+            </motion.pattern>
+          </defs>
+          <motion.rect height="100%" width="100%" fill="url(#arrow-box)" />
+        </svg>
         <div className="links">
           <Link to="">Home</Link>
           <Link to="/experience">Experience</Link>

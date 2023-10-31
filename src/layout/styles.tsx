@@ -18,17 +18,31 @@ export const StyledHeader = styled(motion.header)`
   margin-inline: auto;
   z-index: 10;
   background-color: ${getColors("background")};
-  padding: 0 1.2rem;
   align-items: center;
+  padding: 0;
+  overflow: hidden;
 
   & .header {
     &__pattern {
       grid-area: 1/7/-1/-1;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
 
       & > .links {
         display: flex;
         gap: 12px;
+        margin-right: 2.4rem;
       }
+    }
+
+    &__svg {
+      position: absolute;
+      height: 50vmax;
+      z-index: -1;
     }
   }
 `;
@@ -88,7 +102,7 @@ export const StyledBgGrid = styled(motion.div)`
   background-size: 100px;
   opacity: 0.4;
   overflow: hidden;
-  border-inline: 1px solid ${getColors("borderMain")};
+  border-inline: 1.4px solid ${getColors("borderMain")};
 
   & > svg {
     height: 100vmax;
@@ -96,8 +110,5 @@ export const StyledBgGrid = styled(motion.div)`
     aspect-ratio: 1/-1;
     overflow: hidden;
     transform: scale(1.02);
-
-    & .grid-ctn {
-    }
   }
 `;

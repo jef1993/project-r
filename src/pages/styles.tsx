@@ -104,12 +104,9 @@ export const StlyedGrids = styled(motion.div)`
       grid-column: 8/-1;
       grid-row-end: span 2;
       border-radius: 1.2rem;
-      /* border: 1px solid #03040d; */
-      /* background: #282a2b; */
       overflow: hidden;
       box-sizing: border-box;
       position: relative;
-      /* box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.3); */
       display: flex;
       flex-direction: column;
 
@@ -118,7 +115,6 @@ export const StlyedGrids = styled(motion.div)`
         overflow: hidden;
         display: flex;
         flex-direction: column;
-        background: #282a2b;
         border: 1px solid transparent;
         border-radius: inherit;
       }

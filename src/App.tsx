@@ -102,7 +102,7 @@ function App() {
             }}
             transition={{ delay: isTrasitioned ? 0.45 : 0 }}
           >
-            <Header isAnimated={isAnimated} />
+            <Header isAnimated={isAnimated} y={ySpring} />
 
             <AnimatePresence mode="popLayout">
               <motion.main

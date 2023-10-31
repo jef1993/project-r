@@ -11,13 +11,13 @@ interface BgGridProps {
 
 const BgGrid: React.FC<BgGridProps> = ({
   y,
-  gridSize = 80,
-  strokeWidth = 0.25,
+  gridSize = 70,
+  strokeWidth = 0.3,
 }) => {
   const location = useLocation();
   const isInIndex = location.pathname === "/";
   const { colors } = useTheme();
-  const xOffset = useTransform(y, (y) => -y * 0.15);
+  const xOffset = useTransform(y, (y) => -y * 0.1);
   const pathMid = gridSize / 10;
   const pathEnd = gridSize / 5;
 
@@ -74,8 +74,8 @@ const BgGrid: React.FC<BgGridProps> = ({
           </motion.pattern>
         </defs>
         <motion.rect
-          height="200"
-          width="200"
+          height="100%"
+          width="100%"
           className="grid-ctn"
           fill="url(#Pattern)"
           strokeWidth={strokeWidth}
