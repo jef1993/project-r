@@ -1,19 +1,10 @@
-import React, {
-  Suspense,
-  useEffect,
-  useState,
-  useLayoutEffect,
-  useRef,
-} from "react";
+import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import {
   useSpring,
   AnimatePresence,
   motion,
   useMotionValue,
-  useScroll,
-  useVelocity,
-  useMotionValueEvent,
 } from "framer-motion";
 import { Routes, Route, useLocation } from "react-router-dom";
 import "simplebar-react/dist/simplebar.min.css";
@@ -21,7 +12,6 @@ import "simplebar-react/dist/simplebar.min.css";
 import GlobalStyles from "./styles/GlobalStyles";
 import { darkTheme, lightTheme } from "./styles/themes";
 
-import Home from "./pages/Home";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 import Experience from "./pages/Experience";
@@ -34,9 +24,7 @@ import BgGrid from "./layout/BgGrid";
 function App() {
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
   const initialTheme = mediaQuery.matches ? "dark" : "light";
-  const [currentTheme, setcuurentTheme] = useState<"light" | "dark">(
-    initialTheme
-  );
+  const [currentTheme] = useState<"light" | "dark">(initialTheme);
   const theme = currentTheme === "dark" ? darkTheme : lightTheme;
   const location = useLocation();
   const isInIndex = location.pathname === "/";

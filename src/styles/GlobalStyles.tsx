@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import { scrollBar } from "./mixins";
 import { getColors } from "./themes";
 import variables, { border } from "./variables";
 

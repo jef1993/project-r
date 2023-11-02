@@ -1,7 +1,7 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { StyledHome } from "./styles";
 import { motion } from "framer-motion";
-const mainPath = window.location.pathname.split("/")[1];
+
 const gridRows = {
   rowIn: "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
   rowOut: "0fr 1fr 1fr 0fr 0fr 0fr 0fr",
@@ -42,7 +42,7 @@ interface HomeProps {
   pathname?: string;
 }
 
-const Home: React.FC<HomeProps> = ({ isAnimated, pathname }) => {
+const Home: React.FC<HomeProps> = ({ isAnimated }) => {
   const mainPath = window.location.pathname.split("/")[1];
   const navigate = useNavigate();
   console.log(mainPath);
