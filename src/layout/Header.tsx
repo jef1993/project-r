@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { StyledHeader, StyledHeaderLogo } from "./styles";
 import { MotionValue, motion, useTransform } from "framer-motion";
-import { fill } from "lodash";
 
 interface HeaderProps {
   isAnimated: boolean;
@@ -30,18 +29,16 @@ const Header: React.FC<HeaderProps> = ({ isAnimated, y }) => {
   const isInIndex = pathname === "/";
   const animateKey = isInIndex ? "index" : "pages";
   const offset = useTransform(y, (y) => -y * 0.08);
-  const { paddingInline, delay, fontSize, logoMarginLeft, logoSize } =
+  const { paddingInline, fontSize, logoMarginLeft, logoSize } =
     headerAnimate[animateKey];
 
-  const waveLinePoints = (offset = 0, strokeWidth = 16) => {
+  const waveLinePoints = (offset = 0, strokeWidth = 18) => {
     return `0,${100 + offset} 0,${
       100 - strokeWidth + offset
     } 50,${offset} 100,${100 - strokeWidth + offset} 100,${100 + offset} 50,${
       strokeWidth + offset
     }`;
   };
-
-  const waveLines = () => {};
 
   return (
     <StyledHeader
@@ -90,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({ isAnimated, y }) => {
           className="header__svg"
           viewBox="0 0 100 100"
           xmlns="http://www.w3.org/2000/svg"
-          opacity={0.3}
+          opacity={0.25}
         >
           <defs>
             <motion.pattern
@@ -109,8 +106,8 @@ const Header: React.FC<HeaderProps> = ({ isAnimated, y }) => {
             </motion.pattern>
             <motion.pattern
               viewBox="0 0 20 20"
-              width="0.4"
-              height="0.4"
+              width="0.5"
+              height="0.5"
               id="arrow-box"
               animate={{ stroke: ["#72eb02", "#aa1a1a"] }}
               style={{ y: offset }}
@@ -124,7 +121,7 @@ const Header: React.FC<HeaderProps> = ({ isAnimated, y }) => {
                 height="100%"
                 fill="url(#arrows)"
                 strokeWidth={0}
-              ></rect>
+              />
             </motion.pattern>
           </defs>
           <motion.rect height="100%" width="100%" fill="url(#arrow-box)" />
